@@ -4,40 +4,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using vscode.Models;
+using VSCode.Models;
+using VSCode.Models.bohater;
+using VSCode.Models.osiagniecie;
+using VSCode.Models.sezon;
+
 
 namespace vscode.Controllers
 {
     public class HomeController : Controller
     {
+
+        // private AppDbContext _context;
+
+        // public HomeController(AppDbContext context){
+        //     _context = context;
+        // }
+
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+            Osiagniecie o1 = new OsiagniecieZaUmiejetnosc("Master of puppets", 20, "Get 20 kills");
+            Gracz g1 = new Gracz("Jan", "Kowalski", "NoobSaibot");
+            
+            // OsiagniecieGracza og = new OsiagniecieGracza(g1, o1);
 
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

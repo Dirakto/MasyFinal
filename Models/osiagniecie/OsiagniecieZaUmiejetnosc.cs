@@ -4,33 +4,35 @@ namespace VSCode.Models.osiagniecie
 {
     public class OsiagniecieZaUmiejetnosc : Osiagniecie {
 
+        private string _Opis;
         public string Opis {
             get
             {
-                return Opis;
+                return _Opis;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Opis = value;
+                _Opis = value;
             }
         }
-
+        
+        private int _MaksymalnyWynik;
         public int MaksymalnyWynik { 
             get
             {
-                return MaksymalnyWynik;
+                return _MaksymalnyWynik;
             }
             set
             {
                 if(value <= 0)
                     throw new ArgumentException("Incorrect argument");
-                MaksymalnyWynik = value;
+                _MaksymalnyWynik = value;
             }
         }
 
-        private OsiagniecieZaUmiejetnosc(){}
+        private OsiagniecieZaUmiejetnosc() : base(){}
         public OsiagniecieZaUmiejetnosc(string nazwa, int maksymalnyWynik, string opis) : base(nazwa){
             MaksymalnyWynik = maksymalnyWynik;
             Opis = opis;

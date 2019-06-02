@@ -17,36 +17,40 @@ namespace VSCode.Models.sezon
                 Rankingi.Add(r);
         }
 
+        private int _MaxIloscPunktow;
         public int MaxIloscPunktow {
             get
             {
-                return MaxIloscPunktow;
+                return _MaxIloscPunktow;
             }
             private set
             {
                 if(value <= 0)
                     throw new ArgumentException("Incorrect argument");
-                MaxIloscPunktow = value;
+                _MaxIloscPunktow = value;
             }
         }
 
+        private int _MinIloscPunktow;
         public int MinIloscPunktow {
             get
             {
-                return MinIloscPunktow;
+                return _MinIloscPunktow;
             }
             set
             {
                 if(value <= 0)
                     throw new ArgumentException("Incorrect argument");
-                MinIloscPunktow = value;
+                _MinIloscPunktow = value;
             }
         }
 
         public DateTime DataRozpoczecia { get; private set; }
 
         private Sezon(){}
-        public Sezon(int maxIloscPunktow, int minIloscPunktow){
+        public Sezon(int minIloscPunktow, int maxIloscPunktow){
+            if(maxIloscPunktow <= minIloscPunktow)
+                throw new ArgumentException("MaxIloscPunktow should be greater than MinIlosPunktow");
             MaxIloscPunktow = maxIloscPunktow;
             MinIloscPunktow = minIloscPunktow;
             DataRozpoczecia = DateTime.Now;

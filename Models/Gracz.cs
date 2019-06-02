@@ -33,45 +33,48 @@ namespace VSCode.Models
                 Rankingi.Add(r);
         }
 
+        private string _Imie;
         public string Imie {
             get
             {
-                return Imie;
+                return _Imie;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Imie = value;
+                _Imie = value;
             }
         }
 
+        private string _Nazwisko;
         public string Nazwisko { 
             get
             {
-                return Nazwisko;
+                return _Nazwisko;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Nazwisko = value;
+                _Nazwisko = value;
             }
         }
 
         // !!!!!!!!!!!! A nie baza danych?
         private static Dictionary<string, List<int>> PseudonimBattleTagDictionary = new Dictionary<string, List<int>>();
 
+        private string _Pseudonim;
         public string Pseudonim { 
             get
             {
-                return Pseudonim;
+                return _Pseudonim;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Pseudonim = value;
+                _Pseudonim = value;
 
                 if(!PseudonimBattleTagDictionary.ContainsKey(value)){
                     BattleTag = GenerateBattleTag();

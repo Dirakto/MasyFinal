@@ -6,17 +6,20 @@ namespace VSCode.Models.rozgrywka
     public class Mapa
     {
         public static readonly int MAX_POWIAZANYCH_MAP = 2;
+        private static int MAX_RUND = 3;
 
+        public int TypId { get; set; }
+        private TypMapy _Typ;
         public TypMapy Typ { 
             get
             {
-                return Typ;
+                return _Typ;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Incorrect argument");
-                Typ = value;
+                _Typ = value;
                 value.AddMapa(this);
             }
         }
@@ -34,17 +37,17 @@ namespace VSCode.Models.rozgrywka
             }
         }
 
-        private static int MAX_RUND = 3;
+        private string _Nazwa;
         public string Nazwa {
             get
             {
-                return Nazwa;
+                return _Nazwa;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Nazwa = value;
+                _Nazwa = value;
             }
         }
     
@@ -53,19 +56,17 @@ namespace VSCode.Models.rozgrywka
             return _sezonDodania;
         }
 
-
-
-    
+        private int _IloscRund;
         public int IloscRund {
             get
             {
-                return IloscRund;
+                return _IloscRund;
             }
             set
             {
                 if(value < 0 || value > MAX_RUND)
                     throw new ArgumentException("Incorrect argument");
-                IloscRund = value;
+                _IloscRund = value;
             }
         }
     

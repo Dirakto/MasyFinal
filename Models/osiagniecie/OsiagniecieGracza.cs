@@ -9,31 +9,33 @@ namespace VSCode.Models.osiagniecie
         public int Id { get; set; }
 
         public int GraczId { get; set; }
+        private Gracz _Gracz;
         public Gracz Gracz {
             get
             {
-                return Gracz;
+                return _Gracz;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Gracz reference not set to an instance of an object");
-                Gracz = value;
-                Gracz.AddOsiagniecieGracza(this);
+                _Gracz = value;
+                value.AddOsiagniecieGracza(this);
             }
         }
 
         public int OsiagniecieId { get; set; }
+        private Osiagniecie _Osiagniecie;
         public Osiagniecie Osiagniecie {
             get
             {
-                return Osiagniecie;
+                return _Osiagniecie;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Osiagniecie reference not set to an instance of an object");
-                Osiagniecie = value;
+                _Osiagniecie = value;
                 value.AddOsiagniecieGracza(this);
             }
         }

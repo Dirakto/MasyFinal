@@ -18,16 +18,17 @@ namespace VSCode.Models.osiagniecie
                 OsiagnieciaGraczy.Add(og);
         }
 
-        public String Nazwa { 
+        private String _Nazwa;
+        public String Nazwa {
             get
             { 
-                return Nazwa;
+                return _Nazwa;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Nazwa = value;
+                _Nazwa = value;
             }
         }
 

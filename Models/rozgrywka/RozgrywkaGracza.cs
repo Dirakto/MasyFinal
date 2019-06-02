@@ -14,56 +14,62 @@ namespace VSCode.Models.rozgrywka
                 StatystykiBohaterami.Add(sb);
         }
 
+        public int RozgrywkaId { get; set; }
+        private Rozgrywka _Rozgrywka;
         public Rozgrywka Rozgrywka {
             get
             {
-                return Rozgrywka;
+                return _Rozgrywka;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Incorrect argument");
-                Rozgrywka = value;
+                _Rozgrywka = value;
             }
         }
 
+        public int GraczId { get; set; }
+        private Gracz _Gracz;
         public Gracz Gracz {
             get
             {
-                return Gracz;
+                return _Gracz;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Incorrect argument");
-                Gracz = value;
-                Gracz.AddRozgrywkaGracza(this);
+                _Gracz = value;
+                value.AddRozgrywkaGracza(this);
             }
         }
 
+        private string _Wynik;
         public string Wynik {
             get
             {
-                return Wynik;
+                return _Wynik;
             }
             set
             {
                 if(value == null || !value.Contains(':'))
                     throw new ArgumentException("Incorrect argument");
-                Wynik = value;
+                _Wynik = value;
             }
         }
 
+        private int _PrzyrostPoziomu;
         public int PrzyrostPoziomu {
             get
             {
-                return PrzyrostPoziomu;
+                return _PrzyrostPoziomu;
             }
             set
             {
                 if(value > MAX_PRZYROST_POZIOMU || value < -MAX_PRZYROST_POZIOMU)
                     throw new ArgumentException("Incorrect argument");
-                PrzyrostPoziomu = value;
+                _PrzyrostPoziomu = value;
             }
         }
 
@@ -71,7 +77,6 @@ namespace VSCode.Models.rozgrywka
             Rozgrywka = rozgrywka;
             Gracz = gracz;
         }
-
 
 
     }

@@ -9,8 +9,8 @@ using VSCode.Models;
 namespace vscode.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190602143727_Initial")]
-    partial class Initial
+    [Migration("20190602170335_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

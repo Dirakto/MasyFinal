@@ -16,36 +16,38 @@ namespace VSCode.Models.rozgrywka
             }
         }
 
-        public string Nazwa {
-            get
-            {
-                return Nazwa;
-            }
-            set
-            {
-                if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
-                Nazwa = value;
-            }
-        }
+        // private string _Nazwa;
+        // public string Nazwa {
+        //     get
+        //     {
+        //         return _Nazwa;
+        //     }
+        //     set
+        //     {
+        //         if(value == null || value.Length == 0)
+        //             throw new ArgumentException("Incorrect argument");
+        //         _Nazwa = value;
+        //     }
+        // }
     
         public Typ Typ { get; private set; }
 
+        private int? _LiczbaCeli;
         public int? LiczbaCeli {
             get
             {
-                return LiczbaCeli;
+                return _LiczbaCeli;
             }
             private set
             {
                 if(value != null && value < 0)
                     throw new ArgumentException("Incorrect Argument");
-                LiczbaCeli = value;
+                _LiczbaCeli = value;
             }
         }
     
-        public TypMapy(string nazwa, Typ typ, int? liczbaCeli = null){
-            Nazwa = nazwa;
+        public TypMapy(/*string nazwa, */Typ typ, int? liczbaCeli = null){
+            // Nazwa = nazwa;
             Typ = typ;
             LiczbaCeli = liczbaCeli;
         }

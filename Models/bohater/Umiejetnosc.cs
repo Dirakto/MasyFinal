@@ -4,68 +4,73 @@ namespace VSCode.Models.bohater
 {
     public class Umiejetnosc
     {
+        private string _Nazwa;
         public string Nazwa { 
             get
             {
-                return Nazwa;
+                return _Nazwa;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Nazwa = value;
+                _Nazwa = value;
             }
         }
     
+        private string _Opis;
         public string Opis { 
             get
             {
-                return Opis;
+                return _Opis;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Opis = value;
+                _Opis = value;
             }
         }
 
+        private int _PunktyObrazen;
         public int PunktyObrazen { 
             get
             {
-                return PunktyObrazen;
+                return _PunktyObrazen;
             }
             set
             {
                 if(value < 0)
                     throw new ArgumentException("Incorrect argument");
-                PunktyObrazen = value;
+                _PunktyObrazen = value;
             }
         }
 
+        private int _PunktyLeczenia;
         public int PunktyLeczenia { 
             get
             {
-                return PunktyLeczenia;
+                return _PunktyLeczenia;
             }
             set
             {
                 if(value < 0)
                     throw new ArgumentException("Incorrect argument");
-                PunktyLeczenia = value;
+                _PunktyLeczenia = value;
             }
         }
     
+        private int _PunktyTarczy;
         public int PunktyTarczy {
             get
             {
-                return PunktyTarczy;
+                return _PunktyTarczy;
             }
             set
             {
                 if(value < 0)
                     throw new ArgumentException("Incorrect argument");
-                PunktyTarczy = value;
+                _PunktyTarczy = value;
             }
         }
     

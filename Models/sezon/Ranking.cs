@@ -9,31 +9,33 @@ namespace VSCode.Models.sezon
         public int Id { get; set; }
 
         public int GraczId { get; set; }
+        private Gracz _Gracz;
         public Gracz Gracz {
             get
             {
-                return Gracz;
+                return _Gracz;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Gracz reference not set to an instance of an object");
-                Gracz = value;
+                _Gracz = value;
                 value.AddRanking(this);
             }
         }
 
         public int SezonId { get; set; }
+        private Sezon _Sezon;
         public Sezon Sezon {
             get
             {
-                return Sezon;
+                return _Sezon;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Sezon reference not set to an instance of an object");
-                Sezon = value;
+                _Sezon = value;
                 value.AddRanking(this);
             }
         }

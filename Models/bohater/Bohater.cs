@@ -38,16 +38,17 @@ namespace VSCode.Models.bohater
             throw new FieldAccessException("No attribute for this instance");
         }
 
+        private string _Imie;
         public string Imie {
             get
             {
-                return Imie;
+                return _Imie;
             }
             set
             {
                 if(value == null || value.Length == 0)
                     throw new ArgumentException("Incorrect argument");
-                Imie = value;
+                _Imie = value;
             }
         }
 
@@ -88,7 +89,19 @@ namespace VSCode.Models.bohater
         }
 
         class BohaterOfensywny{
-            public int SilaObrazenKrytycznych { get; private set; }
+            private int _SilaObrazenKrytycznych;
+            public int SilaObrazenKrytycznych {
+                get
+                {
+                    return _SilaObrazenKrytycznych;
+                }
+                private set
+                {
+                    if(value < 0)
+                        throw new ArgumentException("Incorrect argument");
+                    _SilaObrazenKrytycznych = value;
+                }
+            }
         
             public BohaterOfensywny(int silaObrazenKrytycznych){
                 UstawStatystyki(silaObrazenKrytycznych);
@@ -100,7 +113,19 @@ namespace VSCode.Models.bohater
             }
         }
         class BohaterDefensywny{
-            public int PunktyWytrzymalosci { get; private set; }
+            private int _PunktyWytrzymalosci;
+            public int PunktyWytrzymalosci {
+                get
+                {
+                    return _PunktyWytrzymalosci;
+                }
+                private set
+                {
+                    if(value < 0)
+                        throw new ArgumentException("Incorrect argument");
+                    _PunktyWytrzymalosci = value;
+                }
+            }
         
             public BohaterDefensywny(int punktyWytrzymalosci){
                 UstawStatystyki(punktyWytrzymalosci);
@@ -113,7 +138,19 @@ namespace VSCode.Models.bohater
             }
         }
         class BohaterPomocniczy{
-            public int PrzelicznikLeczenia { get; private set; }
+            private int _PrzelicznikLeczenia;
+            public int PrzelicznikLeczenia {
+                get
+                {
+                    return _PrzelicznikLeczenia;
+                }
+                private set
+                {
+                    if(value < 0)
+                        throw new ArgumentException("Incorrect argument");
+                    _PrzelicznikLeczenia = value;
+                }
+            }
            
             public BohaterPomocniczy(int przelicznikLeczenia){
                 UstawStatystyki(przelicznikLeczenia);

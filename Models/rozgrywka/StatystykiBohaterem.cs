@@ -5,30 +5,34 @@ namespace VSCode.Models.rozgrywka
 {
     public class StatystykiBohaterem
     {
+        public int RozgrywkaGraczaId { get; set; }
+        private RozgrywkaGracza _RozgrywkaGracza;
         public RozgrywkaGracza RozgrywkaGracza {
             get
             {
-                return RozgrywkaGracza;
+                return _RozgrywkaGracza;
             }
             private set
             {
                 if(value == null)
                     throw new ArgumentException("Incorrect argument");
-                RozgrywkaGracza = value;
+                _RozgrywkaGracza = value;
                 value.AddStatystykiBohaterem(this);
             }
         }
 
+        public int BohaterId { get; set; }
+        private Bohater _Bohater;
         public Bohater Bohater {
             get
             {
-                return Bohater;
+                return _Bohater;
             }
             set
             {
                 if(value == null)
                     throw new ArgumentException("Incorrect argument");
-                Bohater = value;
+                _Bohater = value;
             }
         }
 

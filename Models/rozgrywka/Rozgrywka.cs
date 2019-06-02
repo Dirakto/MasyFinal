@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using VSCode.Models.sezon;
+using System.Linq;
 
 namespace VSCode.Models.rozgrywka
 {
     public class Rozgrywka
     {
-        private Sezon sezon { get; }
+        public int SezonId { get; set; }
+        private Sezon Sezon { get; set; }
 
         private List<Mapa> Mapy = new List<Mapa>();
         public List<Mapa> GetMapy(){
@@ -24,7 +26,7 @@ namespace VSCode.Models.rozgrywka
             return new List<RozgrywkaGracza>(RozgrywkiGraczy);
         }
         private void AddRozgrywkiGraczy(List<Gracz> gracze){
-            if(gracze == null || gracze.Count != 12)
+            if(gracze == null || gracze.Distinct().ToList().Count != 12)
                 throw new ArgumentException("Incorrect argument");
             foreach(Gracz g in gracze){
                 RozgrywkiGraczy.Add(new RozgrywkaGracza(g, this));

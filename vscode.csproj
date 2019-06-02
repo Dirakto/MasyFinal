@@ -9,7 +9,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include=" MySql.Data.EntityFrameworkCore" Version="8.0.13" />
-    <!-- <PackageReference Include="MySQL.Data.EntityFrameworkCore.Extensions" Version="8.0.13" /> -->
   </ItemGroup>
 
 </Project>
