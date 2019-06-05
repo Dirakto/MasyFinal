@@ -11,11 +11,24 @@ namespace VSCode.Models.osiagniecie
         [Key]
         public int Id { get; set; }
         
-        private List<OsiagniecieGracza> OsiagnieciaGraczy = new List<OsiagniecieGracza>();
-        public List<OsiagniecieGracza> GetOsiagnieciaGraczy(){ return new List<OsiagniecieGracza>(OsiagnieciaGraczy); }
+        private List<OsiagniecieGracza> _OsiagnieciaGraczy = new List<OsiagniecieGracza>();
+        public List<OsiagniecieGracza> OsiagnieciaGraczy {
+            get
+            {
+                return _OsiagnieciaGraczy;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _OsiagnieciaGraczy = value;
+            }
+        }
         public void AddOsiagniecieGracza(OsiagniecieGracza og){
-            if(og != null && !OsiagnieciaGraczy.Contains(og))
-                OsiagnieciaGraczy.Add(og);
+            if(og != null && !OsiagnieciaGraczy.Contains(og)){
+                if(og.Osiagniecie == this)
+                    OsiagnieciaGraczy.Add(og); // do sprawdzenia !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
         }
 
         private String _Nazwa;
@@ -27,7 +40,7 @@ namespace VSCode.Models.osiagniecie
             set
             {
                 if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be null nor 0 length");
                 _Nazwa = value;
             }
         }

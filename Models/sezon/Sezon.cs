@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VSCode.Models;
+using System.Linq;
 
 namespace VSCode.Models.sezon
 {
@@ -10,11 +12,24 @@ namespace VSCode.Models.sezon
         [Key]
         public int Id { get; set; }
 
-        private ICollection<Ranking> Rankingi = new List<Ranking>();
-        public List<Ranking> GetRankingi(){ return new List<Ranking>(Rankingi); }
+        private ICollection<Ranking> _Rankingi = new List<Ranking>();
+        public ICollection<Ranking> Rankingi {
+            get
+            {
+                return _Rankingi;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _Rankingi = value;
+            }
+        }
         public void AddRanking(Ranking r){
-            if(r != null && Rankingi.Contains(r))
-                Rankingi.Add(r);
+            if(r != null && Rankingi.Contains(r)){
+                if(r.Sezon == this)
+                    Rankingi.Add(r);
+            }
         }
 
         private int _MaxIloscPunktow;
@@ -46,6 +61,15 @@ namespace VSCode.Models.sezon
         }
 
         public DateTime DataRozpoczecia { get; private set; }
+
+        private static Sezon _AKTUALNY_SEZON = null;
+        public static Sezon AKTUALNY_SEZON {
+            get{
+                if(_AKTUALNY_SEZON == null)
+                    _AKTUALNY_SEZON = AppDbContext.Context.Sezony.OrderByDescending(s => s.Id).First();
+                return _AKTUALNY_SEZON;
+            }
+        }
 
         private Sezon(){}
         public Sezon(int minIloscPunktow, int maxIloscPunktow){

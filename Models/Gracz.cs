@@ -4,6 +4,7 @@ using VSCode.Models.osiagniecie;
 using VSCode.Models.sezon;
 using VSCode.Models.rozgrywka;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace VSCode.Models
 {
@@ -12,25 +13,64 @@ namespace VSCode.Models
         [Key]
         public int Id { get; set; }
 
-        private List<RozgrywkaGracza> RozgrywkiGracza = new List<RozgrywkaGracza>();
-        public List<RozgrywkaGracza> GetRozgrywkiGracza(){ return new List<RozgrywkaGracza>(RozgrywkiGracza); }
+        private List<RozgrywkaGracza> _RozgrywkiGracza = new List<RozgrywkaGracza>();
+        public List<RozgrywkaGracza> RozgrywkiGracza {
+            get
+            {
+                return _RozgrywkiGracza;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _RozgrywkiGracza = value;
+            }
+        }
         public void AddRozgrywkaGracza(RozgrywkaGracza rg){
-            if(rg != null && !RozgrywkiGracza.Contains(rg))
-                RozgrywkiGracza.Add(rg);
+            if(rg != null && !RozgrywkiGracza.Contains(rg)){
+                if(rg.Gracz == this)
+                    RozgrywkiGracza.Add(rg);
+            }
         }
 
-        private List<OsiagniecieGracza> OsiagnieciaGracza = new List<OsiagniecieGracza>();
-        public List<OsiagniecieGracza> getOsiagnieciaGracza(){ return new List<OsiagniecieGracza>(OsiagnieciaGracza); }
+        private List<OsiagniecieGracza> _OsiagnieciaGracza = new List<OsiagniecieGracza>();
+        public List<OsiagniecieGracza> OsiagnieciaGracza {
+            get
+            {
+                return _OsiagnieciaGracza;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _OsiagnieciaGracza = value;
+            }
+        }
         public void AddOsiagniecieGracza(OsiagniecieGracza og){
-            if(og != null && !OsiagnieciaGracza.Contains(og))
-                OsiagnieciaGracza.Add(og);
+            if(og != null && !OsiagnieciaGracza.Contains(og)){
+                if(og.Gracz == this)
+                    OsiagnieciaGracza.Add(og);
+            }
         }
 
-        private List<Ranking> Rankingi = new List<Ranking>();
-        public List<Ranking> getRankingi(){ return new List<Ranking>(Rankingi); }
+        private List<Ranking> _Rankingi = new List<Ranking>();
+        public List<Ranking> Rankingi {
+            get
+            {
+                return _Rankingi;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _Rankingi = value;
+            }
+        }
         public void AddRanking(Ranking r){
-            if(r != null && !Rankingi.Contains(r))
-                Rankingi.Add(r);
+            if(r != null && !Rankingi.Contains(r)){
+                if(r.Gracz == this)
+                    _Rankingi.Add(r);
+            }
         }
 
         private string _Imie;
@@ -42,7 +82,7 @@ namespace VSCode.Models
             set
             {
                 if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be null nor 0 length");
                 _Imie = value;
             }
         }
@@ -56,7 +96,7 @@ namespace VSCode.Models
             set
             {
                 if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be null nor 0 length");
                 _Nazwisko = value;
             }
         }
@@ -73,7 +113,7 @@ namespace VSCode.Models
             set
             {
                 if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be null nor 0 length");
                 _Pseudonim = value;
 
                 if(!PseudonimBattleTagDictionary.ContainsKey(value)){
@@ -95,8 +135,13 @@ namespace VSCode.Models
 
         public int BattleTag { get; private set; }
 
-        // AKTUALNY POZIOM GRACZA
-
+        // AKTUALNY POZIOM GRACZA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public int AktualnyPoziom {
+            get
+            {
+                return AppDbContext.Context.Rankingi.Where(s => s.SezonId == Sezon.AKTUALNY_SEZON.Id).First().Poziom;
+            }
+        }
  
         public GraczStatus Status { get; set; }
 
@@ -106,6 +151,7 @@ namespace VSCode.Models
             Nazwisko = nazwisko;
             Pseudonim = pseudonim;
             Status = GraczStatus.Nieaktywny;
+            AddRanking(new Ranking(this, Sezon.AKTUALNY_SEZON));
         }
 
 

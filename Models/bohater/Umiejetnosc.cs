@@ -1,9 +1,14 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSCode.Models.bohater
 {
     public class Umiejetnosc
     {
+
+        [Key]
+        public int Id { get; set; }
+
         private string _Nazwa;
         public string Nazwa { 
             get
@@ -76,6 +81,16 @@ namespace VSCode.Models.bohater
     
         public Klawisz Klawisz { get; set; }
 
+        public int BohaterId { get; private set; }
+        public Bohater Bohater { get; private set; }
+        public void AddBohatera(Bohater b){
+            if(b == null)
+                throw new ArgumentException("Incorrect argument");
+            Bohater = b;
+            b.DodajUmiejetnosc(this);
+        }
+
+        private Umiejetnosc(){}
         public Umiejetnosc(string nazwa, string opis, Klawisz klawisz, int punktyObrazen = 0, int punktyLeczenia = 0, int punktyTarczy = 0){
             Nazwa = nazwa;
             Opis = opis;

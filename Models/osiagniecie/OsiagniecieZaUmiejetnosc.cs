@@ -13,7 +13,7 @@ namespace VSCode.Models.osiagniecie
             set
             {
                 if(value == null || value.Length == 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be null nor 0 length");
                 _Opis = value;
             }
         }
@@ -27,7 +27,7 @@ namespace VSCode.Models.osiagniecie
             set
             {
                 if(value <= 0)
-                    throw new ArgumentException("Incorrect argument");
+                    throw new ArgumentException("Value cannot be less or equal to 0");
                 _MaksymalnyWynik = value;
             }
         }

@@ -1,18 +1,32 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSCode.Models.rozgrywka
 {
     public class TypMapy
     {
 
-        private List<Mapa> mapy = new List<Mapa>();
-        public List<Mapa> getMapy(){
-            return mapy;
+        [Key]
+        public int Id { get; set; }
+
+        private List<Mapa> _Mapy = new List<Mapa>();
+        public List<Mapa> Mapy {
+            get
+            {
+                return _Mapy;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _Mapy = value;
+            }
         }
+
         public void AddMapa(Mapa m){
-            if(!mapy.Contains(m)){
-                mapy.Add(m);
+            if(!Mapy.Contains(m)){
+                Mapy.Add(m);
             }
         }
 
@@ -46,6 +60,7 @@ namespace VSCode.Models.rozgrywka
             }
         }
     
+        private TypMapy(){}
         public TypMapy(/*string nazwa, */Typ typ, int? liczbaCeli = null){
             // Nazwa = nazwa;
             Typ = typ;

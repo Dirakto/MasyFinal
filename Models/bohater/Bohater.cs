@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSCode.Models.bohater
 {
@@ -11,8 +12,20 @@ namespace VSCode.Models.bohater
         private static readonly string POMOCNICZY = "Pomocniczy";
         private static readonly string DEFENSYWNY = "Defensywny";
 
+        [Key]
+        public int Id { get; set; }
 
-        private Dictionary<string, Object> Podklasy = new Dictionary<string, Object>();
+        private Dictionary<string, Object> _Podklasy = new Dictionary<string, Object>();
+        public Dictionary<string, Object> Podklasy {
+            get
+            {
+                return _Podklasy;
+            }
+            private set
+            {
+                _Podklasy = value;
+            }
+        } 
         public void AddOfensywny(int silaObrazenKrytycznych){
             Podklasy.Add(OFENSYWNY, new BohaterOfensywny(silaObrazenKrytycznych));
         }
@@ -52,19 +65,31 @@ namespace VSCode.Models.bohater
             }
         }
 
-        private List<Umiejetnosc> Umiejetnosci { get; set; } = new List<Umiejetnosc>();
-        public List<Umiejetnosc> GetUmiejetnosci(){ return new List<Umiejetnosc>(Umiejetnosci); }
+        private List<Umiejetnosc> _Umiejetnosci = new List<Umiejetnosc>();
+        public List<Umiejetnosc> Umiejetnosci {
+            get
+            {
+                return _Umiejetnosci;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Incorrect argument");
+                _Umiejetnosci = value;
+            }
+        }
 
         public Stan Stan { get; set; }
 
+        private Bohater(){}
         private Bohater(string imie, List<Umiejetnosc> umiejetnosci){
+            Podklasy = new Dictionary<string, object>();
             Imie = imie;
             foreach(Umiejetnosc u in umiejetnosci)
                 DodajUmiejetnosc(u);
 
             Stan = Stan.Gotowy;
         }
-
         public static Bohater GetInstance(string imie, List<Umiejetnosc> umiejetnosci){
             if(umiejetnosci.Count >= MIN_UMIEJETNOSC && umiejetnosci.Count <= MAX_UMIEJETNOSC)
                 return new Bohater(imie, umiejetnosci);
@@ -73,9 +98,10 @@ namespace VSCode.Models.bohater
         }
 
         public void DodajUmiejetnosc(Umiejetnosc umiejetnosc){
-            if(Umiejetnosci.Count <= MAX_UMIEJETNOSC)
+            if(Umiejetnosci.Count <= MAX_UMIEJETNOSC && !Umiejetnosci.Contains(umiejetnosc)){
                 Umiejetnosci.Add(umiejetnosc);
-            else
+                umiejetnosc.AddBohatera(this);
+            }else
                 throw new ArgumentException($"Field can only have {MAX_UMIEJETNOSC} elements");
         }
 
@@ -88,56 +114,60 @@ namespace VSCode.Models.bohater
                 ((BohaterPomocniczy)Podklasy[POMOCNICZY]).UstawStatystyki(przelicznikLeczenia.Value);
         }
 
-        class BohaterOfensywny{
-            private int _SilaObrazenKrytycznych;
-            public int SilaObrazenKrytycznych {
-                get
-                {
-                    return _SilaObrazenKrytycznych;
-                }
-                private set
-                {
-                    if(value < 0)
-                        throw new ArgumentException("Incorrect argument");
-                    _SilaObrazenKrytycznych = value;
-                }
-            }
-        
-            public BohaterOfensywny(int silaObrazenKrytycznych){
-                UstawStatystyki(silaObrazenKrytycznych);
-            }
-            public void UstawStatystyki(int silaObrazenKrytycznych){
-                if(silaObrazenKrytycznych < 0)
-                        throw new ArgumentException("Incorrect argument");
-                SilaObrazenKrytycznych = silaObrazenKrytycznych; 
-            }
-        }
-        class BohaterDefensywny{
-            private int _PunktyWytrzymalosci;
-            public int PunktyWytrzymalosci {
-                get
-                {
-                    return _PunktyWytrzymalosci;
-                }
-                private set
-                {
-                    if(value < 0)
-                        throw new ArgumentException("Incorrect argument");
-                    _PunktyWytrzymalosci = value;
-                }
-            }
-        
-            public BohaterDefensywny(int punktyWytrzymalosci){
-                UstawStatystyki(punktyWytrzymalosci);
-            }
 
-            public void UstawStatystyki(int punktyWytrzymalosci){
-                if(punktyWytrzymalosci < 0)
-                    throw new ArgumentException("Incorrect argument");
-                PunktyWytrzymalosci = punktyWytrzymalosci;
-            }
+        public class BohaterOfensywny{
+
+                private int _SilaObrazenKrytycznych;
+                public int SilaObrazenKrytycznych {
+                    get
+                    {
+                        return _SilaObrazenKrytycznych;
+                    }
+                    private set
+                    {
+                        if(value < 0)
+                            throw new ArgumentException("Incorrect argument");
+                        _SilaObrazenKrytycznych = value;
+                    }
+                }
+
+                public BohaterOfensywny(int silaObrazenKrytycznych){
+                    UstawStatystyki(silaObrazenKrytycznych);
+                }
+                public void UstawStatystyki(int silaObrazenKrytycznych){
+                    if(silaObrazenKrytycznych < 0)
+                            throw new ArgumentException("Incorrect argument");
+                    SilaObrazenKrytycznych = silaObrazenKrytycznych; 
+                }
         }
-        class BohaterPomocniczy{
+        public class BohaterDefensywny{
+
+                private int _PunktyWytrzymalosci;
+                public int PunktyWytrzymalosci {
+                    get
+                    {
+                        return _PunktyWytrzymalosci;
+                    }
+                    private set
+                    {
+                        if(value < 0)
+                            throw new ArgumentException("Incorrect argument");
+                        _PunktyWytrzymalosci = value;
+                    }
+                }
+            
+                public BohaterDefensywny(int punktyWytrzymalosci){
+                    UstawStatystyki(punktyWytrzymalosci);
+                }
+
+                public void UstawStatystyki(int punktyWytrzymalosci){
+                    if(punktyWytrzymalosci < 0)
+                        throw new ArgumentException("Incorrect argument");
+                    PunktyWytrzymalosci = punktyWytrzymalosci;
+                }
+            }
+        public class BohaterPomocniczy{
+
             private int _PrzelicznikLeczenia;
             public int PrzelicznikLeczenia {
                 get
@@ -162,6 +192,7 @@ namespace VSCode.Models.bohater
                 PrzelicznikLeczenia = przelicznikLeczenia;
             }
         }
+
     }
 
     public enum Stan{ Gotowy, Dostepny, Niedostepny, Modyfikowany }

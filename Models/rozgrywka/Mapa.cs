@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using VSCode.Models.sezon;
 
 namespace VSCode.Models.rozgrywka
 {
@@ -7,6 +9,9 @@ namespace VSCode.Models.rozgrywka
     {
         public static readonly int MAX_POWIAZANYCH_MAP = 2;
         private static int MAX_RUND = 3;
+
+        [Key]
+        public int Id { get; set; }
 
         public int TypId { get; set; }
         private TypMapy _Typ;
@@ -24,9 +29,18 @@ namespace VSCode.Models.rozgrywka
             }
         }
 
-        private List<Mapa> PowiazaneMapy = new List<Mapa>();
-        public List<Mapa> GetPowiazaneMapy(){
-            return PowiazaneMapy;
+        private List<Mapa> _PowiazaneMapy = new List<Mapa>();
+        public List<Mapa> PowiazaneMapy {
+            get
+            {
+                return _PowiazaneMapy;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _PowiazaneMapy = value;
+            }
         }
         public void AddPowiazanaMapa(Mapa m){
             if(PowiazaneMapy.Count == MAX_POWIAZANYCH_MAP)
@@ -51,10 +65,7 @@ namespace VSCode.Models.rozgrywka
             }
         }
     
-        private readonly int _sezonDodania;
-        public int getSezonDodania(){
-            return _sezonDodania;
-        }
+        private readonly int SezonDodania;
 
         private int _IloscRund;
         public int IloscRund {
@@ -69,12 +80,13 @@ namespace VSCode.Models.rozgrywka
                 _IloscRund = value;
             }
         }
-    
+
+        private Mapa(){}    
         public Mapa(string nazwa, TypMapy typ, int iloscRund){
             Nazwa = nazwa;
             Typ = typ;
             IloscRund = iloscRund;
-            // _sezonDodania = ???;
+            SezonDodania = Sezon.AKTUALNY_SEZON.Id; // SEZON DODANIA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
     }
 }

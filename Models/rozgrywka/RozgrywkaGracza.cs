@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSCode.Models.rozgrywka
 {
@@ -7,8 +8,22 @@ namespace VSCode.Models.rozgrywka
     {
         private static readonly int MAX_PRZYROST_POZIOMU = 100;
 
-        private List<StatystykiBohaterem> StatystykiBohaterami = new List<StatystykiBohaterem>();
-        public List<StatystykiBohaterem> GetStatystykiBohaterami(){ return new List<StatystykiBohaterem>(StatystykiBohaterami); }
+        [Key]
+        public int Id { get; set; }
+
+        private List<StatystykiBohaterem> _StatystykiBohaterami = new List<StatystykiBohaterem>();
+        public List<StatystykiBohaterem> StatystykiBohaterami {
+            get
+            {
+                return _StatystykiBohaterami;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _StatystykiBohaterami = value;
+            }
+        }
         public void AddStatystykiBohaterem(StatystykiBohaterem sb){
             if(sb != null && !StatystykiBohaterami.Contains(sb))
                 StatystykiBohaterami.Add(sb);
@@ -73,11 +88,15 @@ namespace VSCode.Models.rozgrywka
             }
         }
 
+        private RozgrywkaGracza(){}
         public RozgrywkaGracza(Gracz gracz, Rozgrywka rozgrywka){
             Rozgrywka = rozgrywka;
             Gracz = gracz;
         }
 
+        // public void ZmienBohatera(Bohater b){
+
+        // }
 
     }
 }

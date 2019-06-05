@@ -2,17 +2,31 @@ using System;
 using System.Collections.Generic;
 using VSCode.Models.sezon;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace VSCode.Models.rozgrywka
 {
     public class Rozgrywka
     {
+
+        [Key]
+        public int Id { get; set; }
+
         public int SezonId { get; set; }
         private Sezon Sezon { get; set; }
 
-        private List<Mapa> Mapy = new List<Mapa>();
-        public List<Mapa> GetMapy(){
-            return new List<Mapa>(Mapy);
+        private List<Mapa> _Mapy = new List<Mapa>();
+        public List<Mapa> Mapy {
+            get
+            {
+                return _Mapy;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _Mapy = value;
+            }
         }
         private void AddMapy(List<Mapa> mapy){
             if(mapy == null || mapy.Count == 0 || mapy.Count > Mapa.MAX_POWIAZANYCH_MAP+1)
@@ -21,9 +35,18 @@ namespace VSCode.Models.rozgrywka
                 Mapy.Add(m);
         }
 
-        private List<RozgrywkaGracza> RozgrywkiGraczy = new List<RozgrywkaGracza>();
-        public List<RozgrywkaGracza> GetGracze(){
-            return new List<RozgrywkaGracza>(RozgrywkiGraczy);
+        private List<RozgrywkaGracza> _RozgrywkiGraczy = new List<RozgrywkaGracza>();
+        public List<RozgrywkaGracza> RozgrywkiGraczy {
+            get
+            {
+                return _RozgrywkiGraczy;
+            }
+            private set
+            {
+                if(value == null)
+                    throw new ArgumentException("Value cannot be null");
+                _RozgrywkiGraczy = value;
+            }
         }
         private void AddRozgrywkiGraczy(List<Gracz> gracze){
             if(gracze == null || gracze.Distinct().ToList().Count != 12)
@@ -33,10 +56,11 @@ namespace VSCode.Models.rozgrywka
             }
         }
 
+        private Rozgrywka(){}
         public Rozgrywka(List<Gracz> gracze, List<Mapa> mapy){
             AddRozgrywkiGraczy(gracze);
             AddMapy(mapy);
-            // CURRENT SEZON   !!!
+            Sezon = Sezon.AKTUALNY_SEZON; // AKTUALNY SEZON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         // public static void WyswietlRozgrywki(Gracz, sezon);

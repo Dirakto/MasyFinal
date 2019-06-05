@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VSCode.Models;
 
 namespace vscode.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604110937_initialv3")]
+    partial class initialv3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,46 @@ namespace vscode.Migrations
                     b.ToTable("Bohaterowie");
                 });
 
-            modelBuilder.Entity("VSCode.Models.bohater.Umiejetnosc", b =>
+            modelBuilder.Entity("VSCode.Models.bohater.BohaterDefensywny", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("BohaterId");
+                    b.Property<int>("PunktyWytrzymalosci");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BohaterowieDefensywni");
+                });
+
+            modelBuilder.Entity("VSCode.Models.bohater.BohaterOfensywny", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("SilaObrazenKrytycznych");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BohaterowieOfensywni");
+                });
+
+            modelBuilder.Entity("VSCode.Models.bohater.BohaterPomocniczy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PrzelicznikLeczenia");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BohaterowiePomocniczy");
+                });
+
+            modelBuilder.Entity("VSCode.Models.bohater.Umiejetnosc", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Klawisz");
 
@@ -53,8 +89,6 @@ namespace vscode.Migrations
                     b.Property<int>("PunktyTarczy");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BohaterId");
 
                     b.ToTable("Umiejetnosci");
                 });
@@ -257,14 +291,6 @@ namespace vscode.Migrations
                     b.ToTable("OsiagniecieZaUmiejetnosc");
 
                     b.HasDiscriminator().HasValue("OsiagniecieZaUmiejetnosc");
-                });
-
-            modelBuilder.Entity("VSCode.Models.bohater.Umiejetnosc", b =>
-                {
-                    b.HasOne("VSCode.Models.bohater.Bohater", "Bohater")
-                        .WithMany("Umiejetnosci")
-                        .HasForeignKey("BohaterId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VSCode.Models.osiagniecie.OsiagniecieGracza", b =>

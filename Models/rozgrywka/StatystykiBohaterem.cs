@@ -1,10 +1,15 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using VSCode.Models.bohater;
 
 namespace VSCode.Models.rozgrywka
 {
     public class StatystykiBohaterem
     {
+
+        [Key]
+        public int Id { get; set; }
+
         public int RozgrywkaGraczaId { get; set; }
         private RozgrywkaGracza _RozgrywkaGracza;
         public RozgrywkaGracza RozgrywkaGracza {
@@ -80,6 +85,7 @@ namespace VSCode.Models.rozgrywka
     
         public long CzasGry { get; set; } = 0;
 
+        private StatystykiBohaterem(){}
         public StatystykiBohaterem(RozgrywkaGracza rozgrywkaGracza, Bohater bohater){
             RozgrywkaGracza = rozgrywkaGracza;
             Bohater = bohater;
