@@ -12,11 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using VSCode.Models;
 using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
+using VSCode.Controllers;
 
 namespace vscode
 {
     public class Startup
     {
+
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,8 +38,15 @@ namespace vscode
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<AppDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySql")));
+            services.AddTransient<IAppRepository, AppRepository>();
+            services.AddCors(options =>{
+                options.AddPolicy(MyAllowSpecificOrigins, builder => {
+                    builder.WithOrigins("http://localhost:5000").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +65,7 @@ namespace vscode
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseMvc(routes =>
             {

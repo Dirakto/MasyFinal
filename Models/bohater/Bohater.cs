@@ -101,8 +101,9 @@ namespace VSCode.Models.bohater
             if(Umiejetnosci.Count <= MAX_UMIEJETNOSC && !Umiejetnosci.Contains(umiejetnosc)){
                 Umiejetnosci.Add(umiejetnosc);
                 umiejetnosc.AddBohatera(this);
-            }else
-                throw new ArgumentException($"Field can only have {MAX_UMIEJETNOSC} elements");
+            }
+            // else
+                // throw new ArgumentException($"Field can only have {MAX_UMIEJETNOSC} elements");
         }
 
         public void UstawStatystyki(int? silaObrazenKrytycznych = null, int? przelicznikLeczenia = null, int? punktyWytrzymalosci = null){

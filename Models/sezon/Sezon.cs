@@ -62,14 +62,14 @@ namespace VSCode.Models.sezon
 
         public DateTime DataRozpoczecia { get; private set; }
 
-        private static Sezon _AKTUALNY_SEZON = null;
-        public static Sezon AKTUALNY_SEZON {
-            get{
-                if(_AKTUALNY_SEZON == null)
-                    _AKTUALNY_SEZON = AppDbContext.Context.Sezony.OrderByDescending(s => s.Id).First();
-                return _AKTUALNY_SEZON;
-            }
-        }
+        // private static Sezon _AKTUALNY_SEZON = null;
+        // public static Sezon AKTUALNY_SEZON {
+        //     get{
+        //         if(_AKTUALNY_SEZON == null)
+        //             _AKTUALNY_SEZON = AppDbContext.Context.Sezony.OrderByDescending(s => s.Id).First();
+        //         return _AKTUALNY_SEZON;
+        //     }
+        // }
 
         private Sezon(){}
         public Sezon(int minIloscPunktow, int maxIloscPunktow){

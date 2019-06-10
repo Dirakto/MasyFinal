@@ -60,7 +60,7 @@ namespace VSCode.Models.rozgrywka
         public Rozgrywka(List<Gracz> gracze, List<Mapa> mapy){
             AddRozgrywkiGraczy(gracze);
             AddMapy(mapy);
-            Sezon = Sezon.AKTUALNY_SEZON; // AKTUALNY SEZON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Sezon = Sezon.AKTUALNY_SEZON; // AKTUALNY SEZON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         // public static void WyswietlRozgrywki(Gracz, sezon);

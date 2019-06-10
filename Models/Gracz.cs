@@ -132,16 +132,15 @@ namespace VSCode.Models
                 }
             }
         }
-
         public int BattleTag { get; private set; }
 
         // AKTUALNY POZIOM GRACZA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public int AktualnyPoziom {
-            get
-            {
-                return AppDbContext.Context.Rankingi.Where(s => s.SezonId == Sezon.AKTUALNY_SEZON.Id).First().Poziom;
-            }
-        }
+        // public int AktualnyPoziom {
+        //     get
+        //     {
+        //         return AppDbContext.Context.Rankingi.Where(s => s.SezonId == Sezon.AKTUALNY_SEZON.Id).First().Poziom;
+        //     }
+        // }
  
         public GraczStatus Status { get; set; }
 
@@ -151,10 +150,8 @@ namespace VSCode.Models
             Nazwisko = nazwisko;
             Pseudonim = pseudonim;
             Status = GraczStatus.Nieaktywny;
-            AddRanking(new Ranking(this, Sezon.AKTUALNY_SEZON));
+            // AddRanking(new Ranking(this, Sezon.AKTUALNY_SEZON)); !!!!!!!!!! POPRAWIC
         }
-
-
 
 
         private int GenerateBattleTag(){
@@ -162,10 +159,7 @@ namespace VSCode.Models
         }
 
         // public void WyswietlPoziom(Sezon sezon);
-
-
     }
 
     public enum GraczStatus{ Aktywny, Nieaktywny, Zablokowany }
-
 }

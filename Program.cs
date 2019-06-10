@@ -20,7 +20,17 @@ namespace vscode
     {
         public static void Main(string[] args)
         {
-            // CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
+            // AppDbContext context = new AppDbContext();
+            // TypMapy tm = new TypMapy(Typ.Payload, 2);
+            // Mapa m1 = new Mapa("A", tm, 2);
+            // Mapa m2 = new Mapa("B", tm, 1);
+            // Mapa m3 = new Mapa("C", tm, 0);
+            // m1.AddPowiazanaMapa(m2);
+            // m1.AddPowiazanaMapa(m3);
+            // context.Mapy.AddRange(m1, m2, m3);
+            // context.SaveChanges();
+            
             // AppDbContext context = new AppDbContext();
             // Osiagniecie o1 = new OsiagniecieZaUmiejetnosc("Master of puppets", 20, "Get 20 kills");
             // Gracz g1 = new Gracz("Jan", "Kowalski", "NoobSaibot");
@@ -36,10 +46,10 @@ namespace vscode
             // Gracz g11 = new Gracz("Jan", "Kowalski11", "NoobSaibot11");
             // Gracz g12 = new Gracz("Jan", "Kowalski12", "NoobSaibot12");
             // OsiagniecieGracza og = new OsiagniecieGracza(g1, o1);
-            // Umiejetnosc u1 = new Umiejetnosc("Um1", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
-            // Umiejetnosc u2 = new Umiejetnosc("Um1", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
-            // Umiejetnosc u3 = new Umiejetnosc("Um1", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
-            // Umiejetnosc u4 = new Umiejetnosc("Um1", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
+            // Umiejetnosc u1 = new Umiejetnosc("Um3", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
+            // Umiejetnosc u2 = new Umiejetnosc("Um3", "XDDDD", Klawisz.Q, 20, punktyLeczenia: 30);
+            // Umiejetnosc u3 = new Umiejetnosc("Um3", "XDDDD", Klawisz.LeftCtrl, 20, punktyLeczenia: 30);
+            // Umiejetnosc u4 = new Umiejetnosc("Um3", "XDDDD", Klawisz.Passive, 20, punktyLeczenia: 30);
             // Bohater b1 = Bohater.GetInstance("Aleksander", new List<Umiejetnosc>(){u1, u2, u3, u4});
             // Sezon s1 = new Sezon(1000, 5000);
             // Ranking r1 = new Ranking(g1, s1);
@@ -60,17 +70,24 @@ namespace vscode
             // Umiejetnosc u4 = new Umiejetnosc("Um1", "XDDDD", Klawisz.E, 20, punktyLeczenia: 30);
             // Bohater b1 = Bohater.GetInstance("Aleksander", new List<Umiejetnosc>(){u1, u2, u3, u4});
             // b1.AddDefensywny(20);
+            // foreach(Umiejetnosc u in b1.Umiejetnosci)
+            //     Console.WriteLine(u.Id);
             // b1.AddOfensywny(50);
             // b1.Stan = Stan.Dostepny;
             // var b = context.Bohaterowie.ToList()[2];
             // context.Remove(b);
             // context.Bohaterowie.Add(b1);
-            // AppDbContext.Context.SaveChanges();
-            Console.WriteLine(AppDbContext.Context.Gracze.ToList()[0].AktualnyPoziom);
+            // context.SaveChanges();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                // .ConfigureLogging((hostingContext, logging) =>{
+                //     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                //     logging.AddConsole();
+                //     logging.AddDebug();
+                //     logging.AddEventSourceLogger();
+                // })
                 .UseStartup<Startup>();
     }
 }

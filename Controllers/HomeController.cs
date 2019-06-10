@@ -10,25 +10,52 @@ using VSCode.Models.osiagniecie;
 using VSCode.Models.sezon;
 
 
-namespace vscode.Controllers
+namespace VSCode.Controllers
 {
     public class HomeController : Controller
     {
+        private IAppRepository repo;
 
-        // private AppDbContext _context;
+        public HomeController(IAppRepository appRep) {
+            repo = appRep;
+        }
 
-        // public HomeController(AppDbContext context){
-        //     _context = context;
-        // }
-
+        [HttpGet]
         public IActionResult Index()
         {
-            Osiagniecie o1 = new OsiagniecieZaUmiejetnosc("Master of puppets", 20, "Get 20 kills");
-            Gracz g1 = new Gracz("Jan", "Kowalski", "NoobSaibot");
-            
-            // OsiagniecieGracza og = new OsiagniecieGracza(g1, o1);
+            return View(repo.Bohaterowie);
+        }
 
-            return View();
+        // [HttpPost]
+        // public IActionResult ChangeStan(string data){
+            // var boh = repo.Bohaterowie.Where(b => b.Imie == data).First();
+            // if(boh != null && boh.Stan == Stan.Dostepny)
+            //     boh.Stan = Stan.Niedostepny;
+            // else
+            //     boh.Stan = Stan.Dostepny;
+
+            // return Json(data);
+        // }
+
+        [HttpGet]
+        public IActionResult ChangeStan(string name){
+            var boh = repo.Bohaterowie.Where(b => b.Imie == name).FirstOrDefault();
+            if(boh != null && boh.Stan == Stan.Dostepny)
+                boh.Stan = Stan.Niedostepny;
+            else
+                boh.Stan = Stan.Dostepny;
+            repo.SaveAsync();
+
+            return Json(boh.Stan.ToString());
+        }
+
+        [HttpGet]
+        public IActionResult GetBohater(string name){
+            var boh = repo.Bohaterowie.Where(b => b.Imie == name).FirstOrDefault();
+            if(boh != null){
+                return Json(boh);
+            }
+            return Json("Error");
         }
 
     }

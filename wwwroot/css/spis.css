@@ -1,0 +1,82 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+
+#naglowek{
+    font-size: 3.9em;
+    margin-left: 9vw;
+}
+#naglowek > p{
+    font-size: 0.5em;
+    margin-top: -18px;
+    width:440px;
+    text-align: right;
+    min-width: 440px;
+}
+
+#main{
+    display: flex;
+}
+/* @media(max-width: 1230px){
+    #naglowek > p{
+        margin-left: 15vw;
+    }
+} */
+
+
+
+#spis{
+    padding-left: 10px ;
+    max-width: 30vw;
+    flex: 1 1 200px;
+}
+
+#spisBohaterow{
+    font-size: 2.2em;
+    width: 22vw;
+    max-width: 300px;
+    min-width: 260px;
+    text-align: right;
+    display: block;
+    /* margin-left: 7vw; */
+    /* position: relative;
+    left: 5vw;
+    min- */
+}
+
+#spis > table{
+    width: 100%;
+    min-width: 350px;
+    border-bottom: 2px dashed black;
+    margin-bottom: 20px;
+}
+
+.tableTitle{
+    background-color: #ff6505;
+}
+.cell{
+    text-align: center;
+}
+.cellSpacing{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.cellPadding{
+    padding-left: 5px;
+}
+
+.rowGray{
+    background-color: #ffe940;
+}
+.rowOrange{
+    background-color: #ffb64f;
+}
+
+
+
+
+.btn-primary, .btn-primary:visited {
+    background-color: #ff5208 !important;
+}
+.btn-primary:hover, .btn-primary:active{
+    background-color: #b33803!important;
+}

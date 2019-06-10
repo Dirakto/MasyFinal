@@ -14,7 +14,7 @@ namespace vscode.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
 
             modelBuilder.Entity("VSCode.Models.bohater.Bohater", b =>
                 {
@@ -125,13 +125,30 @@ namespace vscode.Migrations
 
                     b.Property<string>("Nazwa");
 
+                    b.Property<int?>("RozgrywkaId");
+
                     b.Property<int>("TypId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RozgrywkaId");
+
                     b.HasIndex("TypId");
 
                     b.ToTable("Mapy");
+                });
+
+            modelBuilder.Entity("VSCode.Models.rozgrywka.MapToMap", b =>
+                {
+                    b.Property<int>("Mapa1Id");
+
+                    b.Property<int>("Mapa2Id");
+
+                    b.HasKey("Mapa1Id", "Mapa2Id");
+
+                    b.HasIndex("Mapa2Id");
+
+                    b.ToTable("MapToMap");
                 });
 
             modelBuilder.Entity("VSCode.Models.rozgrywka.Rozgrywka", b =>
@@ -270,33 +287,50 @@ namespace vscode.Migrations
             modelBuilder.Entity("VSCode.Models.osiagniecie.OsiagniecieGracza", b =>
                 {
                     b.HasOne("VSCode.Models.Gracz", "Gracz")
-                        .WithMany()
+                        .WithMany("OsiagnieciaGracza")
                         .HasForeignKey("GraczId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VSCode.Models.osiagniecie.Osiagniecie", "Osiagniecie")
-                        .WithMany()
+                        .WithMany("OsiagnieciaGraczy")
                         .HasForeignKey("OsiagniecieId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VSCode.Models.rozgrywka.Mapa", b =>
                 {
+                    b.HasOne("VSCode.Models.rozgrywka.Rozgrywka")
+                        .WithMany("Mapy")
+                        .HasForeignKey("RozgrywkaId");
+
                     b.HasOne("VSCode.Models.rozgrywka.TypMapy", "Typ")
-                        .WithMany()
+                        .WithMany("Mapy")
                         .HasForeignKey("TypId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VSCode.Models.rozgrywka.MapToMap", b =>
+                {
+                    b.HasOne("VSCode.Models.rozgrywka.Mapa", "Mapa1")
+                        .WithMany("PowiazaneMapy")
+                        .HasForeignKey("Mapa1Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("VSCode.Models.rozgrywka.Mapa", "Mapa2")
+                        .WithMany("InnePowiazaneMapy")
+                        .HasForeignKey("Mapa2Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VSCode.Models.rozgrywka.RozgrywkaGracza", b =>
                 {
                     b.HasOne("VSCode.Models.Gracz", "Gracz")
-                        .WithMany()
+                        .WithMany("RozgrywkiGracza")
                         .HasForeignKey("GraczId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VSCode.Models.rozgrywka.Rozgrywka", "Rozgrywka")
-                        .WithMany()
+                        .WithMany("RozgrywkiGraczy")
                         .HasForeignKey("RozgrywkaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -309,7 +343,7 @@ namespace vscode.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VSCode.Models.rozgrywka.RozgrywkaGracza", "RozgrywkaGracza")
-                        .WithMany()
+                        .WithMany("StatystykiBohaterami")
                         .HasForeignKey("RozgrywkaGraczaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -317,12 +351,12 @@ namespace vscode.Migrations
             modelBuilder.Entity("VSCode.Models.sezon.Ranking", b =>
                 {
                     b.HasOne("VSCode.Models.Gracz", "Gracz")
-                        .WithMany()
+                        .WithMany("Rankingi")
                         .HasForeignKey("GraczId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VSCode.Models.sezon.Sezon", "Sezon")
-                        .WithMany()
+                        .WithMany("Rankingi")
                         .HasForeignKey("SezonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -50,9 +50,9 @@ namespace VSCode.Models.sezon
             Sezon = sezon;
         }
 
-        public static void WyswietlRankingWszystkichGraczy(Sezon sezon){
+        // public static void WyswietlRankingWszystkichGraczy(Sezon sezon){
             
-        }
+        // }
 
 
     }

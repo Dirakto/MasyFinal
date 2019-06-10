@@ -1,0 +1,22 @@
+
+#picker{
+    display: flex;
+    flex: 0.2 1 100px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vh;
+}
+
+#picker > div{
+    position: fixed;
+    text-align: center;
+}
+
+#picker > div > div{
+    padding-bottom: 40px;
+}
+
+
+.xSize{
+    font-size: 1.5em;
+}

@@ -13,9 +13,8 @@ namespace VSCode.Models
     public class AppDbContext : DbContext
     {
 
-        public static AppDbContext Context { get; } = new AppDbContext();
 
-        public AppDbContext() : base(){}
+        // public AppDbContext() : base(){}
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options){}
 
         public DbSet<Gracz> Gracze { get; set; }
@@ -31,16 +30,13 @@ namespace VSCode.Models
         public DbSet<Umiejetnosc> Umiejetnosci { get; set; }
         public DbSet<Rozgrywka> Rozgrywki { get; set; }
         public DbSet<Mapa> Mapy { get; set; }
+        public DbSet<MapToMap> MapToMap { get; set; }
         public DbSet<TypMapy> TypyMap { get; set; }
 
-        // public DbSet<BohaterOfensywny> BohaterowieOfensywni { get; set; }
-        // public DbSet<BohaterDefensywny> BohaterowieDefensywni { get; set; }
-        // public DbSet<BohaterPomocniczy> BohaterowiePomocniczy { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
-            optionsBuilder.UseMySQL("server=localhost;port=3306;database=finalmasy;user=oskar;password=oskar");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
+        //     optionsBuilder.UseMySQL("server=localhost;port=3306;database=finalmasy;user=oskar;password=oskar");
+        // }
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             modelBuilder.Entity<Osiagniecie>().ToTable("Osiagniecia");
 
@@ -55,6 +51,18 @@ namespace VSCode.Models
                 .HasMany(u => u.Umiejetnosci)
                 .WithOne(o => o.Bohater)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<MapToMap>()
+                .HasKey(e => new { e.Mapa1Id, e.Mapa2Id });
+            modelBuilder.Entity<MapToMap>()
+                .HasOne(e => e.Mapa1)
+                .WithMany(m => m.PowiazaneMapy)
+                .HasForeignKey(e => e.Mapa1Id);
+            modelBuilder.Entity<MapToMap>()
+                .HasOne(e => e.Mapa2)
+                .WithMany(m => m.InnePowiazaneMapy)
+                .HasForeignKey(e => e.Mapa2Id);
         }
 
     }
